@@ -4,15 +4,6 @@ from nonebot.adapters import mirai2
 from functools import wraps
 
 
-# class _WrapEvent:
-#     def __init__(self, event: mirai2.Event):
-#         assert isinstance(event, mirai2.Event)
-#         self._mirai_event = event
-#
-#     def __getattr__(self, item):
-#         return getattr(self._mirai_event, item)
-
-
 class MessageEvent:
     message_type: Literal['private', 'group']
     self_id: int
