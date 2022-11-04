@@ -88,6 +88,8 @@ help:
 def format_short(url:str):
     if '//mp.weixin.qq.com/' in url:
         return url.split('&chksm')[0]
+    if 'music.163.com/' in url:
+        return url.split('&uct')[0]
     return url.split('?')[0]
 
 
