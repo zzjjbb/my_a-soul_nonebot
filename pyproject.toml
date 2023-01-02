@@ -1,36 +1,28 @@
 [tool.poetry]
 name = "asbot_new"
-version = "0.3.0"
+version = "0.4.0.a1"
 description = "my new asoul bot"
-authors = []
+authors = ["zzjjbb"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-nonebot2 = "2.0.0b5"
-nonebot-adapter-mirai2 = "0.0.15"
-nonebot-adapter-telegram = "^0.1.0b1"
+nonebot2 = "2.0.0rc2"
+nonebot-adapter-mirai2 = "0.0.19"
+nonebot-adapter-telegram = "^0.1.0b4"
 requests = "^2.25"
 # haruka start
 click = "^8.0.4"
-httpx = "^0.23.0"
-nonebot-plugin-apscheduler = "^0.1.4"
-playwright = "^1.22.0"
-pydantic = "^1.9.0"
-python-dotenv = ">=0.19.2,<0.21.0"
-tortoise-orm = {extras = ["asyncpg"], version = ">=0.18.1,<0.20.0"}
-aerich = "^0.6.3"
-bilireq = "^0.2.1"
+httpx = "^0.23.1"
+nonebot-plugin-apscheduler = "^0.2.0"
+playwright = "^1.28.0"
+pydantic = "^1.10.2"
+python-dotenv = ">=0.19.2,<0.22.0"
+tortoise-orm = {extras = ["asyncpg"], version = "^0.19.2"}
+bilireq = "^0.2.3.post0"
 packaging = "^21.3"
+nonebot-plugin-guild-patch = "^0.2.1"
 # haruka end
-
-[tool.poetry.dev-dependencies]
-flake8 = "^5.0.4"
-nb-cli = "^0.6.0"
-
-[tool.nonebot]
-plugins = []
-plugin_dirs = ["src/plugins"]
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
