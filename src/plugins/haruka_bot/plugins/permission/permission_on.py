@@ -1,3 +1,5 @@
+from typing import Union
+
 from nonebot import on_command
 from ...utils import GroupMessageEvent
 from ...utils import GROUP_ADMIN, GROUP_OWNER

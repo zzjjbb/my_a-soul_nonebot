@@ -1,3 +1,5 @@
+from typing import Union
+
 from nonebot import on_command
 from ...utils import GroupMessageEvent
 from ...utils import GROUP_ADMIN, GROUP_OWNER
@@ -6,11 +8,14 @@ from nonebot.permission import SUPERUSER
 
 from ... import config
 from ...database import DB as db
-from ...utils import group_only, handle_uid, to_me, uid_check
+from ...utils import get_type_id, group_only, handle_uid, to_me, uid_check
 from ...utils import event_converter
 
 at_off = on_command(
-    "关闭全体", rule=to_me(), permission=GROUP_OWNER | GROUP_ADMIN | SUPERUSER, priority=5
+    "关闭全体",
+    rule=to_me(),
+    permission=GROUP_OWNER | GROUP_ADMIN | SUPERUSER,
+    priority=5,
 )
 at_off.__doc__ = """关闭全体 UID"""
 
@@ -23,7 +28,9 @@ at_off.got("uid", prompt="请输入要关闭全体的UID")(uid_check)
 @event_converter
 async def _(event: GroupMessageEvent, uid: str = ArgPlainText("uid")):
     """根据 UID 关闭全体"""
-    if await db.set_sub("at", False, uid=uid, type="group", type_id=event.group_id):
+    if await db.set_sub(
+        "at", False, uid=uid, type="group", type_id=await get_type_id(event)
+    ):
         user = await db.get_user(uid=uid)
         assert user is not None
         await at_off.finish(

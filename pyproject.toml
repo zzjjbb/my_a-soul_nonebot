@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 nonebot2 = "2.0.0rc2"
-nonebot-adapter-mirai2 = "0.0.19"
+nonebot-adapter-mirai2 = "0.0.17"
 nonebot-adapter-telegram = "^0.1.0b4"
 requests = "^2.25"
 # haruka start

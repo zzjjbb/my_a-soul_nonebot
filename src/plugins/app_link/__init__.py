@@ -85,6 +85,12 @@ help:
     reply_result = await bot.send(event, helpstr, at_sender=True)
     record_reply(event.normalize_dict(), reply_result)
 
+def is_app(event: MessageEvent):
+    try:
+        return event.get_message().export()[0]['type'] == 'App'
+    except KeyError:
+        return False
+
 def format_short(url:str):
     if '//mp.weixin.qq.com/' in url:
         return url.split('&chksm')[0]
@@ -93,30 +99,25 @@ def format_short(url:str):
     return url.split('?')[0]
 
 
-message_1=on_message(priority=2, block=False)
+message_1=on_message(rule=is_app, priority=2, block=True)
 
 @message_1.handle()
-async def _message_1(bot:Bot, event:MessageEvent, matcher:Matcher):
+async def _message_1(bot:Bot, event:MessageEvent):
     textdict = event.get_message().export()[0]
-    # print(textdict)
-    # print(type(textdict))
-    if textdict['type']=='App':
-        contentstr=textdict['content']
-        # print(type(contentstr))
-        content=json.loads(contentstr)
-        if content.get('desc')=="新闻":
-            url=content['meta']['news']['jumpUrl']
-        else:
-            url=content["meta"]['detail_1'].get('qqdocurl')
-        if url is None:
-            print('no url!')
-            return
+    contentstr=textdict['content']
+    content=json.loads(contentstr)
+    if content.get('desc')=="新闻":
+        url=content['meta']['news']['jumpUrl']
+    else:
+        url=content["meta"]['detail_1'].get('qqdocurl')
+    if url is None:
+        print('no url!')
+        return
 
-        surl=format_short(url)
-        print(surl)
-        reply_result = await bot.send(event, surl, at_sender=False)
-        record_reply(event.normalize_dict(), reply_result)
-        matcher.stop_propagation()
+    surl=format_short(url)
+    print(surl)
+    reply_result = await bot.send(event, surl, at_sender=False)
+    record_reply(event.normalize_dict(), reply_result)
 
 
 recall_notice=on_notice()

@@ -3,6 +3,7 @@ from bilireq.user import get_user_info
 from nonebot import on_command
 from ...utils import MessageEvent
 from nonebot.params import ArgPlainText
+from nonebot_plugin_guild_patch import GuildMessageEvent
 
 from ...database import DB as db
 from ...utils import (
@@ -44,10 +45,15 @@ async def _(event: MessageEvent, uid: str = ArgPlainText("uid")):
                     f"未知错误，请联系开发者反馈，错误内容：\n\
                                     {str(e)}"
                 )
+
+    if isinstance(event, GuildMessageEvent):
+        await db.add_guild(
+            guild_id=event.guild_id, channel_id=event.channel_id, admin=True
+        )
     result = await db.add_sub(
         uid=uid,
         type=event.message_type,
-        type_id=get_type_id(event),
+        type_id=await get_type_id(event),
         bot_id=event.self_id,
         name=name,
         # TODO 自定义默认开关
